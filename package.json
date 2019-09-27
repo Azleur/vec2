@@ -1,0 +1,15 @@
+{
+    "private": true,
+    "name": "template",
+    "version": "0.1.0",
+    "author": "Azleur",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "test": "jest",
+        "test:run": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --collectCoverage",
+        "build": "tsc"
+    }
+}
