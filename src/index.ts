@@ -52,13 +52,17 @@ export class Vec2 {
         return this.Div(this.Mag());
     }
 
-    /** Returns the angle between this vector and the x-axis. */
+    /**
+     * Returns the angle between this vector and the x-axis.
+     *
+     * Returns the angle between this vector and (1, 0), in radians, in the range (-Pi, +Pi].
+     */
     Argument(): number {
         return Math.atan2(this.y, this.x);
     }
 }
 
 /** Returns a Vec2 (Cartesian coordinates) corresponding to the polar coordinates (radius, angle). */
-export function fromPolar(radius: number, angle: number): Vec2 {
+export function FromPolar(radius: number, angle: number): Vec2 {
     return new Vec2(radius * Math.cos(angle), radius * Math.sin(angle));
 }
