@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "template",
+    "name": "vec2",
     "version": "0.1.0",
     "author": "Azleur",
     "main": "dist/index.js",
