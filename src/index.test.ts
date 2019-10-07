@@ -211,6 +211,30 @@ test("Vec2.Argument(): number returns the argument (angle from x-axis, in radian
     expect(v6.Argument()).toBeCloseTo(Pi / 6); // 30°
 });
 
+test("Vec2.Clone(): Vec2 returns a copy of the original vector", () => {
+    for (let x = -5; x <= +6; x += 1 / 3) {
+        for (let y = -7; y <= +8; y += 1 / 4) {
+            const v1 = new Vec2(x, y);
+            const v2 = v1.Clone();
+            expect(v1).toEqual(v2);
+            expect(v1).not.toBe(v2);
+        }
+    }
+});
+
+test("Vec2.Cap() returns a length-capped copy of the original vector", () => {
+    for (let x = -5; x <= +6; x += 1 / 3) {
+        for (let y = -7; y <= +8; y += 1 / 4) {
+            const v1 = new Vec2(x, y);
+            const v2 = v1.Cap(2);
+            const m1 = v1.Mag();
+            const m2 = v2.Mag();
+            expect(m2).toBeCloseTo(Math.min(2, m1));
+            expect(v1).not.toBe(v2);
+        }
+    }
+});
+
 test("FromPolar(number, number) returns the Vec2 corresponding to the polar representation (radius, angle).", () => {
     // Radius degeneracy
     compare(FromPolar(0, 0.0 * Pi), { x: 0, y: 0 });

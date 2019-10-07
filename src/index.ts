@@ -60,6 +60,23 @@ export class Vec2 {
     Argument(): number {
         return Math.atan2(this.y, this.x);
     }
+
+    /** Returns a copy of this vector. */
+    Clone(): Vec2 {
+        return new Vec2(this.x, this.y);
+    }
+
+    /** Returns a copy of this vector, scaled if needed so its magnitude is at most 'length'. */
+    Cap(length: number): Vec2 {
+        if (length <= Number.EPSILON) {
+            return new Vec2(0, 0);
+        }
+        const mag = this.Mag();
+        if (length < mag) {
+            return this.Times(length / mag);
+        }
+        return this.Clone();
+    }
 }
 
 /** Returns a Vec2 (Cartesian coordinates) corresponding to the polar coordinates (radius, angle). */
