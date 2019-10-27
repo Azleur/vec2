@@ -93,6 +93,19 @@ test("Vec2.Dot(Vec2): number returns a scalar corresponding to the dot product, 
     expect(out8).toBe(-1); // Trace.
 });
 
+test("Vec2.Cross(Vec2): number returns the 2D cross product, without modifying the originals", () => {
+    const v1 = new Vec2(1, 2);
+    const v2 = new Vec2(-2, 1);
+
+    const out1 = v1.Cross(v1);
+    expect(out1).toBe(0); // Parallel vectors get nulled.
+    expect(v1).toEqual({ x: 1, y: 2 }); // Not modified.
+
+    const out2 = v1.Cross(v2);
+    expect(out2).toBe(5); // Perpendicular vectors get full modulus.
+    expect(v2).toEqual({ x: -2, y: 1 }); // Not modified.
+});
+
 test("Vec2.Times(number): Vec2 returns a new scaled vector without modifying the original.", () => {
     const v1 = new Vec2(1, 2);
     const v2 = new Vec2(3, -4);

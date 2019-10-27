@@ -22,6 +22,16 @@ export class Vec2 {
         return this.x * that.x + this.y * that.y;
     }
 
+    /**
+     * Returns 2D cross product of this x that.
+     *
+     * Equivalent to embedding this and that in the XY plane and returning the Z value of the product vector
+     * (such a vector would be of the form (0, 0, z)).
+     */
+    Cross(that: Vec2): number {
+        return this.x * that.y - this.y * that.x;
+    }
+
     /** Returns k * this (scalar product). */
     Times(k: number): Vec2 {
         return new Vec2(k * this.x, k * this.y);
