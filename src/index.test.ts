@@ -1,4 +1,4 @@
-import { Vec2, FromPolar } from './index';
+import { Vec2, FromPolar, Interpolate, Average } from './index';
 
 // Handy helpers!
 const compare = (a: Vec2, b: any) => {
@@ -270,4 +270,40 @@ test("FromPolar(number, number) returns the Vec2 corresponding to the polar repr
     compare(FromPolar(1 * Math.sqrt(2), 0.25 * Pi), { x: 1, y: 1 });
     compare(FromPolar(2 * Math.sqrt(2), 0.25 * Pi), { x: 2, y: 2 });
     compare(FromPolar(3 * Math.sqrt(2), 0.25 * Pi), { x: 3, y: 3 });
+});
+
+test("Interpolate(Vec2, Vec2, number): Vec2 returns the unclamped linear interpolation of two vectors", () => {
+    const vec1 = new Vec2(0, 0);
+    const vec2 = new Vec2(1, 1);
+    const vec3 = new Vec2(2, 3);
+    const vec4 = new Vec2(-5, 4);
+
+    compare(Interpolate(vec1, vec2, 0), vec1); // t=0 => a.
+    compare(Interpolate(vec1, vec2, 1), vec2); // t=1 => b.
+    compare(Interpolate(vec1, vec2, 0.5), { x: 0.5, y: 0.5 }); // t=1/2 => midpoint.
+    compare(Interpolate(vec1, vec2, -1), { x: -1, y: -1 }); // Unclamped.
+    compare(Interpolate(vec1, vec2, 2), { x: 2, y: 2 }); // Unclamped.
+
+    compare(Interpolate(vec3, vec4, 0), vec3); // t=0 => a.
+    compare(Interpolate(vec3, vec4, 1), vec4); // t=1 => b.
+    compare(Interpolate(vec3, vec4, 0.5), { x: -1.5, y: 3.5 }); // t=1/2 => midpoint.
+    compare(Interpolate(vec3, vec4, -1), { x: 9, y: 2 }); // Unclamped.
+    compare(Interpolate(vec3, vec4, 2), { x: -12, y: 5 }); // Unclamped.
+});
+
+test("Average(...Vec2): Vec2 calculates the arithmetic mean of a sequence of vectors", () => {
+    const vec1 = new Vec2(0, 0);
+    const vec2 = new Vec2(1, 1);
+    const vec3 = new Vec2(2, 3);
+    const vec4 = new Vec2(-5, 4);
+
+    compare(Average(), { x: 0, y: 0 }); // No vectors => zero element.
+    compare(Average(vec1), vec1); // One vector => itself.
+    compare(Average(vec1, vec2), { x: 0.5, y: 0.5 }); // Two vectors => midpoint.
+
+    compare(Average(vec3), vec3); // One vector => itself.
+    compare(Average(vec3, vec4), { x: -1.5, y: 3.5 }); // Two vectors => midpoint.
+
+    compare(Average(vec1, vec2, vec3), { x: 1, y: 4 / 3 });
+    compare(Average(vec1, vec2, vec3, vec4), { x: -0.5, y: 2 });
 });

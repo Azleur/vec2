@@ -93,3 +93,22 @@ export class Vec2 {
 export function FromPolar(radius: number, angle: number): Vec2 {
     return new Vec2(radius * Math.cos(angle), radius * Math.sin(angle));
 }
+
+/** Linearly interpolate between a at t=0 and b at t=1 (t is NOT clamped). */
+export function Interpolate(a: Vec2, b: Vec2, t: number): Vec2 {
+    return a.Add(b.Sub(a).Times(t));
+}
+
+/** Calculate the average vector. */
+export function Average(...vecs: Vec2[]): Vec2 {
+    let accumulator = new Vec2(0, 0);
+    if (vecs.length == 0) {
+        return accumulator;
+    }
+
+    for (let vec of vecs) {
+        accumulator = accumulator.Add(vec);
+    }
+
+    return accumulator.Div(vecs.length);
+}
