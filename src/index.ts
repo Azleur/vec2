@@ -112,3 +112,34 @@ export function Average(...vecs: Vec2[]): Vec2 {
 
     return accumulator.Div(vecs.length);
 }
+
+/**
+ * Calculate the weighted average vector.
+ *
+ * * Iterates up to shortest length.
+ * * Ignores negative or approximately zero weights and their associated vectors.
+ */
+export function WeightedAverage(vecs: Vec2[], weights: number[]): Vec2 {
+    let accumulator = new Vec2(0, 0);
+    let totalWeight = 0;
+
+    const N = Math.min(vecs.length, weights.length);
+    if (N == 0) {
+        return accumulator;
+    }
+
+    for (let i = 0; i < N; i++) {
+        const vec = vecs[i];
+        const weight = weights[i];
+        if (weight > Number.EPSILON) {
+            totalWeight += weight;
+            accumulator = accumulator.Add(vec.Times(weight));
+        }
+    }
+
+    if (totalWeight > Number.EPSILON) {
+        return accumulator.Div(totalWeight);
+    } else {
+        return accumulator;
+    }
+}

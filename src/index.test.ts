@@ -1,4 +1,4 @@
-import { Vec2, FromPolar, Interpolate, Average } from './index';
+import { Vec2, FromPolar, Interpolate, Average, WeightedAverage } from './index';
 
 // Handy helpers!
 const compare = (a: Vec2, b: any) => {
@@ -306,4 +306,22 @@ test("Average(...Vec2): Vec2 calculates the arithmetic mean of a sequence of vec
 
     compare(Average(vec1, vec2, vec3), { x: 1, y: 4 / 3 });
     compare(Average(vec1, vec2, vec3, vec4), { x: -0.5, y: 2 });
+});
+
+test("WeightedAverage(Vec2[], number[]): Vec2 calculates the weighted mean of a sequence of vectors", () => {
+    const zeroVec = new Vec2(0, 0);
+    const vec1 = new Vec2(1, 1);
+    const vec2 = new Vec2(2, 3);
+
+    compare(WeightedAverage([], []), zeroVec); // No vectors => zero element.
+
+    compare(WeightedAverage([vec1], [1]), vec1); // One vector => itself.
+    compare(WeightedAverage([vec2], [1]), vec2); // One vector => itself.
+
+    compare(WeightedAverage([vec1], [2]), vec1); // Total weight sum does not matter.
+    compare(WeightedAverage([vec1], [0]), zeroVec); // Zero weight => get nothing.
+
+    compare(WeightedAverage([vec1, vec2], [10, 0]), vec1);
+    compare(WeightedAverage([vec1, vec2], [0, 15]), vec2);
+    compare(WeightedAverage([vec1, vec2], [3.5, 3.5]), { x: 1.5, y: 2 });
 });
