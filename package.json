@@ -1,15 +1,11 @@
 {
-    "private": true,
-    "name": "vec2",
+    "name": "@azleur/vec2",
     "version": "0.1.0",
-    "author": "Azleur",
+    "author": "azleur",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "jest",
-        "test:run": "jest",
-        "test:watch": "jest --watch",
-        "test:coverage": "jest --collectCoverage",
         "build": "rm -rf dist && tsc"
     },
     "devDependencies": {
