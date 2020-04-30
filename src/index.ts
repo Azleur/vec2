@@ -87,6 +87,11 @@ export class Vec2 {
         }
         return this.Clone();
     }
+
+    /** Returns a copy of this vector, swapping x and y. */
+    Transpose(): Vec2 {
+        return new Vec2(this.y, this.x);
+    }
 }
 
 /** Returns a Vec2 (Cartesian coordinates) corresponding to the polar coordinates (radius, angle). */

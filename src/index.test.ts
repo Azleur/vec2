@@ -248,6 +248,20 @@ test("Vec2.Cap() returns a length-capped copy of the original vector", () => {
     }
 });
 
+test("Vec2.Transpose() returns a copy of the original vector, swapping x and y", () => {
+    const v1 = new Vec2(0, 0);
+    const v2 = new Vec2(1, 0);
+    const v3 = new Vec2(0, 1);
+    const v4 = new Vec2(1, 1);
+    const v5 = new Vec2(-2, 3.5);
+
+    expect(v1.Transpose()).toEqual({ x: 0  , y:  0 });
+    expect(v2.Transpose()).toEqual({ x: 0  , y:  1 });
+    expect(v3.Transpose()).toEqual({ x: 1  , y:  0 });
+    expect(v4.Transpose()).toEqual({ x: 1  , y:  1 });
+    expect(v5.Transpose()).toEqual({ x: 3.5, y: -2 });
+});
+
 test("FromPolar(number, number) returns the Vec2 corresponding to the polar representation (radius, angle).", () => {
     // Radius degeneracy
     compare(FromPolar(0, 0.0 * Pi), { x: 0, y: 0 });
