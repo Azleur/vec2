@@ -1,4 +1,4 @@
-import { Vec2, FromPolar, Interpolate, Average, WeightedAverage } from './index';
+import { Vec2, Dist, FromPolar, Interpolate, Average, WeightedAverage } from './index';
 
 // Handy helpers!
 const compare = (a: Vec2, b: any) => {
@@ -260,6 +260,28 @@ test("Vec2.Transpose() returns a copy of the original vector, swapping x and y",
     expect(v3.Transpose()).toEqual({ x: 1  , y:  0 });
     expect(v4.Transpose()).toEqual({ x: 1  , y:  1 });
     expect(v5.Transpose()).toEqual({ x: 3.5, y: -2 });
+});
+
+test("Dist(u,v) returns the Euclidean distance between u and v", () => {
+    const v1   = new Vec2(1,  0);
+    const v2   = new Vec2(4, -4);
+    const zero = new Vec2(0,  0);
+    const one  = new Vec2(1,  1);
+
+    // Distance to self is 0.
+    expect(Dist(v1  , v1  )).toBeCloseTo(0);
+    expect(Dist(v2  , v2  )).toBeCloseTo(0);
+    expect(Dist(zero, zero)).toBeCloseTo(0);
+    expect(Dist(one , one )).toBeCloseTo(0);
+
+    // Distance to zero is magnitude.
+    expect(Dist(zero, v1 )).toBeCloseTo(v1 .Mag());
+    expect(Dist(zero, v2 )).toBeCloseTo(v2 .Mag());
+    expect(Dist(zero, one)).toBeCloseTo(one.Mag());
+
+    // Misc.
+    expect(Dist(v1 , v2)).toBeCloseTo(5);
+    expect(Dist(one, v1)).toBeCloseTo(1);
 });
 
 test("FromPolar(number, number) returns the Vec2 corresponding to the polar representation (radius, angle).", () => {

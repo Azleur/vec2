@@ -94,6 +94,9 @@ export class Vec2 {
     }
 }
 
+/** Returns the Euclidean distance between u and v. */
+export const Dist = (u: Vec2, v: Vec2): number => u.Sub(v).Mag();
+
 /** Returns a Vec2 (Cartesian coordinates) corresponding to the polar coordinates (radius, angle). */
 export function FromPolar(radius: number, angle: number): Vec2 {
     return new Vec2(radius * Math.cos(angle), radius * Math.sin(angle));
