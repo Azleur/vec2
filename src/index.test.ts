@@ -262,6 +262,33 @@ test("Vec2.Transpose() returns a copy of the original vector, swapping x and y",
     expect(v5.Transpose()).toEqual({ x: 3.5, y: -2 });
 });
 
+test("Vec2.Orthogonal() returns the right-hand perpendicular vector (vector to the left) of equal magnitude", () => {
+    const zero = new Vec2(0, 0);
+    const x    = new Vec2(1, 0);
+    const y    = new Vec2(0, 1);
+
+    const radii  = [0.5, 1, 3, 19];
+    const angles = [0, Pi / 6, Pi / 2, Pi, 4];
+
+    // Zero is zero
+    compare(zero.Orthogonal(), zero);
+
+    // Sanity check.
+    compare(x.Orthogonal(), y);
+    compare(y.Orthogonal(), x.Negate());
+
+    // The real deal: right-handed orthogonal coordinate system.
+    for (const r of radii) {
+        for (const a of angles) {
+            const u = FromPolar(r, a);
+            const v = u.Orthogonal();
+            expect(v.Mag()).toBeCloseTo(r);
+            expect(u.Dot(v)).toBeCloseTo(0);
+            expect(u.Cross(v)).toBeCloseTo(r * r);
+        }
+    }
+});
+
 test("Dist(u,v) returns the Euclidean distance between u and v", () => {
     const v1   = new Vec2(1,  0);
     const v2   = new Vec2(4, -4);

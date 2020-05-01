@@ -92,6 +92,11 @@ export class Vec2 {
     Transpose(): Vec2 {
         return new Vec2(this.y, this.x);
     }
+
+    /** Returns the orthogonal vector v such that (this, v) is a right-handed basis, and |v| = |this|. */
+    Orthogonal(): Vec2 {
+        return new Vec2(-this.y, this.x);
+    }
 }
 
 /** Returns the Euclidean distance between u and v. */
