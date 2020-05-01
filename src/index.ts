@@ -98,17 +98,13 @@ export class Vec2 {
 export const Dist = (u: Vec2, v: Vec2): number => u.Sub(v).Mag();
 
 /** Returns a Vec2 (Cartesian coordinates) corresponding to the polar coordinates (radius, angle). */
-export function FromPolar(radius: number, angle: number): Vec2 {
-    return new Vec2(radius * Math.cos(angle), radius * Math.sin(angle));
-}
+export const FromPolar = (radius: number, angle: number): Vec2 => new Vec2(radius * Math.cos(angle), radius * Math.sin(angle));
 
 /** Linearly interpolate between a at t=0 and b at t=1 (t is NOT clamped). */
-export function Interpolate(a: Vec2, b: Vec2, t: number): Vec2 {
-    return a.Add(b.Sub(a).Times(t));
-}
+export const Interpolate = (a: Vec2, b: Vec2, t: number): Vec2 => a.Add(b.Sub(a).Times(t));
 
 /** Calculate the average vector. */
-export function Average(...vecs: Vec2[]): Vec2 {
+export const Average = (...vecs: Vec2[]): Vec2 => {
     let accumulator = new Vec2(0, 0);
     if (vecs.length == 0) {
         return accumulator;
@@ -127,7 +123,7 @@ export function Average(...vecs: Vec2[]): Vec2 {
  * * Iterates up to shortest length.
  * * Ignores negative or approximately zero weights and their associated vectors.
  */
-export function WeightedAverage(vecs: Vec2[], weights: number[]): Vec2 {
+export const WeightedAverage = (vecs: Vec2[], weights: number[]): Vec2 => {
     let accumulator = new Vec2(0, 0);
     let totalWeight = 0;
 
