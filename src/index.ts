@@ -152,3 +152,6 @@ export const WeightedAverage = (vecs: Vec2[], weights: number[]): Vec2 => {
         return accumulator;
     }
 }
+
+/** Returns the projection of arbitrary vector 'v' into *unit* vector 'n', as a Vec2. */
+export const Project = (v: Vec2, n: Vec2): Vec2 => n.Times(v.Dot(n));

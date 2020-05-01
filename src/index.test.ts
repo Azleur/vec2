@@ -1,4 +1,4 @@
-import { Vec2, Dist, FromPolar, Interpolate, Average, WeightedAverage } from './index';
+import { Vec2, Dist, FromPolar, Interpolate, Average, WeightedAverage, Project } from './index';
 
 // Handy helpers!
 const compare = (a: Vec2, b: any) => {
@@ -387,4 +387,31 @@ test("WeightedAverage(Vec2[], number[]): Vec2 calculates the weighted mean of a 
     compare(WeightedAverage([vec1, vec2], [10, 0]), vec1);
     compare(WeightedAverage([vec1, vec2], [0, 15]), vec2);
     compare(WeightedAverage([vec1, vec2], [3.5, 3.5]), { x: 1.5, y: 2 });
+});
+
+test("Project(v, n), with n unit, projects v into <n>", () => {
+    const invSqrt2 = Math.sqrt(0.5);
+    const zero = new Vec2(0, 0);
+    const x = new Vec2(1, 0);
+    const y = new Vec2(0, 1);
+    const diagonal = new Vec2(invSqrt2, invSqrt2);
+    const v = new Vec2(-2, 3.5);
+
+    // Zero projects to zero.
+    compare(Project(zero, x), zero);
+    compare(Project(zero, y), zero);
+    compare(Project(zero, diagonal), zero);
+
+    // Orthogonal vectors project to zero.
+    compare(Project(x, y), zero);
+    compare(Project(y, x), zero);
+
+    // Projecting at 45 degrees.
+    compare(Project(x, diagonal), diagonal.Times(invSqrt2));
+    compare(Project(diagonal, x), x.Times(invSqrt2));
+
+    // Algebra!
+    compare(Project(v, x), x.Times(-2));
+    compare(Project(v, y), y.Times(3.5));
+    compare(Project(v, diagonal), diagonal.Times(1.5 * invSqrt2));
 });
