@@ -1,4 +1,8 @@
-import { Vec2, Dist, FromPolar, Interpolate, Average, WeightedAverage, Project } from './index';
+import { 
+    Vec2, 
+    Dist, FromPolar, Interpolate, Average, WeightedAverage, Project, 
+    Left, Right, Up, Down, Zero, One
+} from './index';
 
 // Handy helpers!
 const compare = (a: Vec2, b: any) => {
@@ -414,4 +418,14 @@ test("Project(v, n), with n unit, projects v into <n>", () => {
     compare(Project(v, x), x.Times(-2));
     compare(Project(v, y), y.Times(3.5));
     compare(Project(v, diagonal), diagonal.Times(1.5 * invSqrt2));
+});
+
+test("Left, Right, Up, Down, Zero, One are defined constants with the expected values", () => {
+    compare(Left , new Vec2(+1,  0));
+    compare(Right, new Vec2(-1,  0));
+    compare(Up   , new Vec2( 0, +1));
+    compare(Down , new Vec2( 0, -1));
+
+    compare(Zero , new Vec2( 0,  0));
+    compare(One  , new Vec2( 1,  1));
 });
