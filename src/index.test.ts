@@ -421,8 +421,8 @@ test("Project(v, n), with n unit, projects v into <n>", () => {
 });
 
 test("Left, Right, Up, Down, Zero, One are defined constants with the expected values", () => {
-    compare(Left , new Vec2(+1,  0));
-    compare(Right, new Vec2(-1,  0));
+    compare(Left , new Vec2(-1,  0));
+    compare(Right, new Vec2(+1,  0));
     compare(Up   , new Vec2( 0, +1));
     compare(Down , new Vec2( 0, -1));
 
