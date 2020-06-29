@@ -1,25 +1,41 @@
 export class Vec2 {
-    x: number;
-    y: number;
+    values: number[];
+    // x: number;
+    // y: number;
 
     constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
+        // this.x = x;
+        // this.y = y;
+        this.values = [x, y];
     }
+
+    get x(): number { return this.values[0]; }
+    get y(): number { return this.values[1]; }
+
+    static get Left (): Vec2 { return new Vec2(-1,  0); }
+    static get Right(): Vec2 { return new Vec2(+1,  0); }
+    static get Up   (): Vec2 { return new Vec2( 0, +1); }
+    static get Down (): Vec2 { return new Vec2( 0, -1); }
+
+    static get Zero (): Vec2 { return new Vec2( 0,  0); }
+    static get One  (): Vec2 { return new Vec2( 1,  1); }
+
+    static get X    (): Vec2 { return new Vec2(+1,  0); }
+    static get Y    (): Vec2 { return new Vec2( 0, +1); }
 
     /** Returns this + that. */
     Add(that: Vec2): Vec2 {
-        return new Vec2(this.x + that.x, this.y + that.y);
+        return new Vec2(this.values[0] + that.values[0], this.values[1] + that.values[1]);
     }
 
     /** Returns this - that. */
     Sub(that: Vec2): Vec2 {
-        return new Vec2(this.x - that.x, this.y - that.y);
+        return new Vec2(this.values[0] - that.values[0], this.values[1] - that.values[1]);
     }
 
     /** Returns this * that (dot product). */
     Dot(that: Vec2): number {
-        return this.x * that.x + this.y * that.y;
+        return this.values[0] * that.values[0] + this.values[1] * that.values[1];
     }
 
     /**
@@ -29,17 +45,17 @@ export class Vec2 {
      * (such a vector would be of the form (0, 0, z)).
      */
     Cross(that: Vec2): number {
-        return this.x * that.y - this.y * that.x;
+        return this.values[0] * that.values[1] - this.values[1] * that.values[0];
     }
 
     /** Returns k * this (scalar product). */
     Times(k: number): Vec2 {
-        return new Vec2(k * this.x, k * this.y);
+        return new Vec2(k * this.values[0], k * this.values[1]);
     }
 
     /** Returns (1/k) * this (scalar division). */
     Div(k: number): Vec2 {
-        return new Vec2(this.x / k, this.y / k);
+        return new Vec2(this.values[0] / k, this.values[1] / k);
     }
 
     /** Returns -this. */
@@ -49,7 +65,7 @@ export class Vec2 {
 
     /** Returns the squared magnitude of this vector. */
     MagSqr(): number {
-        return this.x * this.x + this.y * this.y;
+        return this.values[0] * this.values[0] + this.values[1] * this.values[1];
     }
 
     /** Returns the magnitude of this vector. */
@@ -68,12 +84,12 @@ export class Vec2 {
      * Returns the angle between this vector and (1, 0), in radians, in the range (-Pi, +Pi].
      */
     Argument(): number {
-        return Math.atan2(this.y, this.x);
+        return Math.atan2(this.values[1], this.values[0]);
     }
 
     /** Returns a copy of this vector. */
     Clone(): Vec2 {
-        return new Vec2(this.x, this.y);
+        return new Vec2(this.values[0], this.values[1]);
     }
 
     /** Returns a copy of this vector, scaled if needed so its magnitude is at most 'length'. */
@@ -90,12 +106,12 @@ export class Vec2 {
 
     /** Returns a copy of this vector, swapping x and y. */
     Transpose(): Vec2 {
-        return new Vec2(this.y, this.x);
+        return new Vec2(this.values[1], this.values[0]);
     }
 
     /** Returns the orthogonal vector v such that (this, v) is a right-handed basis, and |v| = |this|. */
     Orthogonal(): Vec2 {
-        return new Vec2(-this.y, this.x);
+        return new Vec2(-this.values[1], this.values[0]);
     }
 }
 
@@ -155,11 +171,3 @@ export const WeightedAverage = (vecs: Vec2[], weights: number[]): Vec2 => {
 
 /** Returns the projection of arbitrary vector 'v' into *unit* vector 'n', as a Vec2. */
 export const Project = (v: Vec2, n: Vec2): Vec2 => n.Times(v.Dot(n));
-
-export const Left  = new Vec2(-1,  0);
-export const Right = new Vec2(+1,  0);
-export const Up    = new Vec2( 0, +1);
-export const Down  = new Vec2( 0, -1);
-
-export const Zero  = new Vec2( 0,  0);
-export const One   = new Vec2( 1,  1);
