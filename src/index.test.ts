@@ -39,6 +39,35 @@ test("constructor takes parameters (x: number, y: number), which correspond to r
 
 });
 
+test("constructor also takes parameter (values: number[]), which correspond to respective fields. They are represented internally by an array.", () => {
+    const v1 = new Vec2([0, 0]);
+    const v2 = new Vec2([1, 0]);
+    const v3 = new Vec2([0, 1]);
+    const v4 = new Vec2([1, 1]);
+    const v5 = new Vec2([-2, 3.5]);
+
+    expect(v1).toEqual({ values: [ 0, 0 ] });
+    expect(v1.x).toEqual(0);
+    expect(v1.y).toEqual(0);
+
+    expect(v2).toEqual({ values: [ 1, 0 ] });
+    expect(v2.x).toEqual(1);
+    expect(v2.y).toEqual(0);
+
+    expect(v3).toEqual({ values: [ 0, 1 ] });
+    expect(v3.x).toEqual(0);
+    expect(v3.y).toEqual(1);
+
+    expect(v4).toEqual({ values: [ 1, 1 ] });
+    expect(v4.x).toEqual(1);
+    expect(v4.y).toEqual(1);
+
+    expect(v5).toEqual({ values: [ -2, 3.5 ] });
+    expect(v5.x).toEqual( -2);
+    expect(v5.y).toEqual(3.5);
+
+});
+
 test("Vec2.Add(Vec2): Vec2 returns a new sum vector without modifying the originals.", () => {
     const v1 = new Vec2(1, 2);
     const v2 = new Vec2(3, -4);

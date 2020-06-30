@@ -1,12 +1,14 @@
 export class Vec2 {
     values: number[];
-    // x: number;
-    // y: number;
 
-    constructor(x: number, y: number) {
-        // this.x = x;
-        // this.y = y;
-        this.values = [x, y];
+    constructor(x: number, y: number);
+    constructor(values: number[]);
+    constructor(a: number | number[], b?: number) {
+        if (a instanceof Array) {
+            this.values = a;
+        } else {
+            this.values = [a, b!];
+        }
     }
 
     get x(): number { return this.values[0]; }
