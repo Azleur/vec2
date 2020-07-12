@@ -14,6 +14,9 @@ export class Vec2 {
     get x(): number { return this.values[0]; }
     get y(): number { return this.values[1]; }
 
+    set x(val: number) { this.values[0] = val; }
+    set y(val: number) { this.values[1] = val; }
+
     static get Left (): Vec2 { return new Vec2(-1,  0); }
     static get Right(): Vec2 { return new Vec2(+1,  0); }
     static get Up   (): Vec2 { return new Vec2( 0, +1); }
