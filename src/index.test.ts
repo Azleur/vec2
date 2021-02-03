@@ -347,6 +347,93 @@ test("Vec2.Orthogonal() returns the right-hand perpendicular vector (vector to t
     }
 });
 
+test("Vec2.Floor() returns a copy of the vector, with coefficients floor()'d", () => {
+    const v1 = new Vec2( 0,  0);
+    const v2 = new Vec2( 1,  0);
+    const v3 = new Vec2( 0, -1);
+    const v4 = new Vec2(-1,  1);
+
+    const v5 = new Vec2(0.23, Pi);
+    const v6 = new Vec2(-2.3, 3.5);
+    const v7 = new Vec2(-4.937403, -193.1);
+
+    compare(v1.Floor(), v1);
+    compare(v2.Floor(), v2);
+    compare(v3.Floor(), v3);
+    compare(v4.Floor(), v4);
+    
+    compare(v5.Floor(), new Vec2(0, 3));
+    compare(v6.Floor(), new Vec2(-3, 3));
+    compare(v7.Floor(), new Vec2(-5, -194));
+});
+
+test("Vec2.Ceil() returns a copy of the vector, with coefficients ceil()'d", () => {
+    const v1 = new Vec2( 0,  0);
+    const v2 = new Vec2( 1,  0);
+    const v3 = new Vec2( 0, -1);
+    const v4 = new Vec2(-1,  1);
+
+    const v5 = new Vec2(0.23, Pi);
+    const v6 = new Vec2(-2.3, 3.5);
+    const v7 = new Vec2(-4.937403, -193.1);
+
+    compare(v1.Ceil(), v1);
+    compare(v2.Ceil(), v2);
+    compare(v3.Ceil(), v3);
+    compare(v4.Ceil(), v4);
+    
+    compare(v5.Ceil(), new Vec2(1, 4));
+    compare(v6.Ceil(), new Vec2(-2, 4));
+    compare(v7.Ceil(), new Vec2(-4, -193));
+});
+
+test("Vec2.Abs() returns a copy of the vector, with coefficients abs()'d", () => {
+    const v1 = new Vec2( 0,  0);
+    const v2 = new Vec2( 1,  0);
+    const v3 = new Vec2( 0, -1);
+    const v4 = new Vec2(-1,  1);
+
+    const v5 = new Vec2(0.23, Pi);
+    const v6 = new Vec2(-2.3, 3.5);
+    const v7 = new Vec2(-4.937403, -193.1);
+
+    compare(v1.Abs(), v1);
+    compare(v2.Abs(), v2);
+    compare(v3.Abs(), new Vec2(0, 1));
+    compare(v4.Abs(), new Vec2(1, 1));
+    
+    compare(v5.Abs(), v5);
+    compare(v6.Abs(), new Vec2(2.3, 3.5));
+    compare(v7.Abs(), new Vec2(4.937403, 193.1));
+});
+
+test("Vec2.Map() returns a copy of the vector, with coefficients mapped by the provided function", () => {
+    const v1 = new Vec2( 0,  0);
+    const v2 = new Vec2( 1,  0);
+    const v3 = new Vec2(-203, 3.5);
+    const v4 = new Vec2(-4.937, -19.13);
+
+    compare(v1.Map(x => x), v1);
+    compare(v2.Map(x => x), v2);
+    compare(v3.Map(x => x), v3);
+    compare(v4.Map(x => x), v4);
+
+    compare(v1.Map(x => -x), v1.Negate());
+    compare(v2.Map(x => -x), v2.Negate());
+    compare(v3.Map(x => -x), v3.Negate());
+    compare(v4.Map(x => -x), v4.Negate());
+
+    compare(v1.Map(x => 2 * x), v1.Times(2));
+    compare(v2.Map(x => 2 * x), v2.Times(2));
+    compare(v3.Map(x => 2 * x), v3.Times(2));
+    compare(v4.Map(x => 2 * x), v4.Times(2));
+
+    compare(v1.Map(x => 1), Vec2.One);
+    compare(v2.Map(x => 1), Vec2.One);
+    compare(v3.Map(x => 1), Vec2.One);
+    compare(v4.Map(x => 1), Vec2.One);
+});
+
 test("Dist(u,v) returns the Euclidean distance between u and v", () => {
     const v1   = new Vec2(1,  0);
     const v2   = new Vec2(4, -4);

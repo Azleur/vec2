@@ -118,6 +118,26 @@ export class Vec2 {
     Orthogonal(): Vec2 {
         return new Vec2(-this.values[1], this.values[0]);
     }
+
+    /** Returns a copy of this vector, applying floor() to all coefficients. */
+    Floor(): Vec2 {
+        return new Vec2(Math.floor(this.values[0]), Math.floor(this.values[1]));
+    }
+
+    /** Returns a copy of this vector, applying ceil() to all coefficients. */
+    Ceil(): Vec2 {
+        return new Vec2(Math.ceil(this.values[0]), Math.ceil(this.values[1]));
+    }
+
+    /** Returns a copy of this vector, applying abs() to all coefficients. */
+    Abs(): Vec2 {
+        return new Vec2(Math.abs(this.values[0]), Math.abs(this.values[1]));
+    }
+
+    /** Returns a copy of this vector, applying f() to all coefficients. */
+    Map(f: (x: number) => number): Vec2 {
+        return new Vec2(f(this.values[0]), f(this.values[1]));
+    }
 }
 
 /** Returns the Euclidean distance between u and v. */
