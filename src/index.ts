@@ -3,11 +3,14 @@ export class Vec2 {
 
     constructor(x: number, y: number);
     constructor(values: number[]);
+    constructor(k: number);
     constructor(a: number | number[], b?: number) {
         if (a instanceof Array) {
             this.values = a;
+        } else if (b === undefined) {
+            this.values = [a, a];
         } else {
-            this.values = [a, b!];
+            this.values = [a, b];
         }
     }
 
@@ -28,23 +31,37 @@ export class Vec2 {
     static get X    (): Vec2 { return new Vec2(+1,  0); }
     static get Y    (): Vec2 { return new Vec2( 0, +1); }
 
-    /** Returns this + that. */
-    Add(that: Vec2): Vec2 {
-        return new Vec2(this.values[0] + that.values[0], this.values[1] + that.values[1]);
+    /** Adds the scalar value to each component. */
+    Add(scalar: number): Vec2;
+    /** Returns the vector addition (this + vector). */
+    Add(vector: Vec2): Vec2;
+    Add(that: Vec2 | number): Vec2 {
+        if (that instanceof Vec2) {
+            return new Vec2(this.values[0] + that.values[0], this.values[1] + that.values[1]);
+        } else {
+            return new Vec2(this.values[0] + that, this.values[1] + that);
+        }
     }
 
-    /** Returns this - that. */
-    Sub(that: Vec2): Vec2 {
-        return new Vec2(this.values[0] - that.values[0], this.values[1] - that.values[1]);
+    /** Subtracts the scalar value from each component. */
+    Sub(scalar: number): Vec2;
+    /** Returns the vector subtraction (this - that). */
+    Sub(vector: Vec2): Vec2;
+    Sub(that: number | Vec2): Vec2 {
+        if (that instanceof Vec2) {
+            return new Vec2(this.values[0] - that.values[0], this.values[1] - that.values[1]);
+        } else {
+            return new Vec2(this.values[0] - that, this.values[1] - that);
+        }
     }
 
-    /** Returns this * that (dot product). */
+    /** Returns the dot product (this * that). */
     Dot(that: Vec2): number {
         return this.values[0] * that.values[0] + this.values[1] * that.values[1];
     }
 
     /**
-     * Returns 2D cross product of this x that.
+     * Returns 2D cross product (this x that).
      *
      * Equivalent to embedding this and that in the XY plane and returning the Z value of the product vector
      * (such a vector would be of the form (0, 0, z)).
@@ -53,14 +70,28 @@ export class Vec2 {
         return this.values[0] * that.values[1] - this.values[1] * that.values[0];
     }
 
-    /** Returns k * this (scalar product). */
-    Times(k: number): Vec2 {
-        return new Vec2(k * this.values[0], k * this.values[1]);
+    /** Returns the scalar product (scalar * this). */
+    Times(scalar: number): Vec2;
+    /** Returns the component-wise product (this * vector). */
+    Times(vector: Vec2): Vec2;
+    Times(that: number | Vec2): Vec2 {
+        if (that instanceof Vec2) {
+            return new Vec2(this.values[0] * that.values[0], this.values[1] * that.values[1]);
+        } else {
+            return new Vec2(this.values[0] * that, this.values[1] * that);
+        }
     }
 
-    /** Returns (1/k) * this (scalar division). */
-    Div(k: number): Vec2 {
-        return new Vec2(this.values[0] / k, this.values[1] / k);
+    /** Returns the scalar division (this / scalar). */
+    Div(scalar: number): Vec2;
+    /** Returns the component-wise division (this / vector). */
+    Div(vector: Vec2): Vec2;
+    Div(that: number | Vec2): Vec2 {
+        if (that instanceof Vec2) {
+            return new Vec2(this.values[0] / that.values[0], this.values[1] / that.values[1]);
+        } else {
+            return new Vec2(this.values[0] / that, this.values[1] / that);
+        }
     }
 
     /** Returns -this. */

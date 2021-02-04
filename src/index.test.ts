@@ -68,6 +68,18 @@ test("constructor also takes parameter (values: number[]), which correspond to r
 
 });
 
+test("constructor also takes a single number, and sets both components to its value", () => {
+    const v1 = new Vec2(0);
+    const v2 = new Vec2(1);
+    const v3 = new Vec2(-1);
+    const v4 = new Vec2(92.53);
+
+    expect(v1).toEqual({ values: [0, 0] });
+    expect(v2).toEqual({ values: [1, 1] });
+    expect(v3).toEqual({ values: [-1, -1] });
+    expect(v4).toEqual({ values: [92.53, 92.53] });
+});
+
 test("Both this.values and this.x, this.y are assignable to", () => {
     const vec = new Vec2(1, 2);
 
@@ -98,6 +110,21 @@ test("Vec2.Add(Vec2): Vec2 returns a new sum vector without modifying the origin
     expect(out4).toEqual(new Vec2(6, -8));
 });
 
+test("Vec2.Add(number): Vec2 returns a new sum vector without modifying the original.", () => {
+    const v1 = new Vec2(1, 2);
+    const v2 = new Vec2(3, -4);
+
+    const out1 = v1.Add(2);
+    expect(out1).toEqual(new Vec2(3, 4));
+    expect(v1).toEqual(new Vec2(1, 2)); // v1 not modified.
+
+    const out2 = v2.Add(3);
+    expect(out2).toEqual(new Vec2(6, -1));
+
+    const out3 = v1.Add(-10);
+    expect(out3).toEqual(new Vec2(-9, -8));
+});
+
 test("Vec2.Sub(Vec2): Vec2 returns a new subtraction vector without modifying the originals.", () => {
     const v1 = new Vec2(1, 2);
     const v2 = new Vec2(3, -4);
@@ -116,6 +143,21 @@ test("Vec2.Sub(Vec2): Vec2 returns a new subtraction vector without modifying th
 
     const out4 = v2.Sub(v2);
     expect(out4).toEqual(zero); // Cancellation.
+});
+
+test("Vec2.Sub(number): Vec2 returns a new subtraction vector without modifying the original.", () => {
+    const v1 = new Vec2(1, 2);
+    const v2 = new Vec2(3, -4);
+
+    const out1 = v1.Sub(2);
+    expect(out1).toEqual(new Vec2(-1, 0));
+    expect(v1).toEqual(new Vec2(1, 2)); // v1 not modified.
+
+    const out2 = v2.Sub(3);
+    expect(out2).toEqual(new Vec2(0, -7));
+
+    const out3 = v1.Sub(-10);
+    expect(out3).toEqual(new Vec2(11, 12));
 });
 
 test("Vec2.Dot(Vec2): number returns a scalar corresponding to the dot product, without modifying the originals.", () => {
@@ -184,6 +226,29 @@ test("Vec2.Times(number): Vec2 returns a new scaled vector without modifying the
     expect(out4).toEqual(zero); // Zero.
 });
 
+test("Vec2.Times(Vec2): Vec2 returns a new scaled vector without modifying the originals.", () => {
+    const v1 = new Vec2(1, 2);
+    const v2 = new Vec2(3, -4);
+    const v3 = new Vec2(5, 6);
+    const v4 = new Vec2(-0.5, -0.25);
+
+    const out1 = v1.Times(v3);
+    expect(out1).toEqual(new Vec2(5, 12));
+    expect(v1).toEqual(new Vec2(1, 2)); // v1 not modified.
+    expect(v3).toEqual(new Vec2(5, 6)); // v3 not modified.
+
+    const out2 = v2.Times(v4);
+    expect(out2).toEqual(new Vec2(-1.5, 1));
+    expect(v2).toEqual(new Vec2(3, -4)); // v2 not modified.
+    expect(v4).toEqual(new Vec2(-0.5, -0.25)); // v4 not modified.
+
+    const out3 = v1.Times(Vec2.One);
+    expect(out3).toEqual(v1); // Identity.
+
+    const out4 = v1.Times(Vec2.Zero);
+    expect(out4).toEqual(Vec2.Zero); // Zero.
+});
+
 test("Vec2.Div(number): Vec2 returns a new scaled vector without modifying the original.", () => {
     const v1 = new Vec2(1, 2);
     const v2 = new Vec2(3, -4);
@@ -197,6 +262,27 @@ test("Vec2.Div(number): Vec2 returns a new scaled vector without modifying the o
     expect(v2).toEqual(new Vec2(3, -4)); // v2 not modified.
 
     const out3 = v1.Div(1);
+    expect(out3).toEqual(v1); // Identity.
+});
+
+test("Vec2.Div(Vec2): Vec2 returns a new scaled vector without modifying the originals.", () => {
+    const v1 = new Vec2(1, 2);
+    const v2 = new Vec2(3, -4);
+
+    const v3 = new Vec2(5, 6);
+    const v4 = new Vec2(-0.5, -0.25);
+
+    const out1 = v1.Div(v3);
+    expect(out1).toEqual(new Vec2(1/5, 1/3));
+    expect(v1).toEqual(new Vec2(1, 2)); // v1 not modified.
+    expect(v3).toEqual(new Vec2(5, 6)); // v3 not modified.
+
+    const out2 = v2.Div(v4);
+    expect(out2).toEqual(new Vec2(-6, 16));
+    expect(v2).toEqual(new Vec2(3, -4)); // v2 not modified.
+    expect(v4).toEqual(new Vec2(-0.5, -0.25)); // v4 not modified.
+
+    const out3 = v1.Div(Vec2.One);
     expect(out3).toEqual(v1); // Identity.
 });
 
