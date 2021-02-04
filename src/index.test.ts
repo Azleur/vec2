@@ -520,6 +520,50 @@ test("Vec2.Map() returns a copy of the vector, with coefficients mapped by the p
     compare(v4.Map(x => 1), Vec2.One);
 });
 
+test("Vec2.Max() returns the max component", () => {
+    expect(Vec2.Zero.Max()).toBe(0);
+    expect(Vec2.One.Max()).toBe(1);
+    expect(Vec2.X.Max()).toBe(1);
+
+    expect(new Vec2( 0.5, 4.1 ).Max()).toBe(4.1);
+    expect(new Vec2( 4.2, 0.56).Max()).toBe(4.2);
+    expect(new Vec2(-6.5, 5.33).Max()).toBe(5.33);
+});
+
+test("Vec2.Max(Vec2) returns the component-wise max vector", () => {
+    compare(Vec2.Zero.Max(Vec2.Zero), Vec2.Zero);
+    compare(Vec2.Zero.Max(Vec2.One ), Vec2.One );
+    compare(Vec2.One .Max(Vec2.Zero), Vec2.One );
+    compare(Vec2.One .Max(Vec2.One ), Vec2.One );
+
+    compare(Vec2.X.Max(Vec2.Y), Vec2.One);
+
+    compare(new Vec2(0.5, 4.1 ).Max(new Vec2(3  , 4  )), new Vec2(3  , 4.1));
+    compare(new Vec2(4.2, 0.56).Max(new Vec2(3.5, 0.7)), new Vec2(4.2, 0.7));
+});
+
+test("Vec2.Min() returns the min component", () => {
+    expect(Vec2.Zero.Min()).toBe(0);
+    expect(Vec2.One .Min()).toBe(1);
+    expect(Vec2.X   .Min()).toBe(0);
+
+    expect(new Vec2( 0.5, 4.1 ).Min()).toBe( 0.5 );
+    expect(new Vec2( 4.2, 0.56).Min()).toBe( 0.56);
+    expect(new Vec2(-6.5, 5.33).Min()).toBe(-6.5 );
+});
+
+test("Vec2.Min(Vec2) returns the component-wise min vector", () => {
+    compare(Vec2.Zero.Min(Vec2.Zero), Vec2.Zero);
+    compare(Vec2.Zero.Min(Vec2.One ), Vec2.Zero);
+    compare(Vec2.One .Min(Vec2.Zero), Vec2.Zero);
+    compare(Vec2.One .Min(Vec2.One ), Vec2.One );
+
+    compare(Vec2.X.Min(Vec2.Y), Vec2.Zero);
+
+    compare(new Vec2(0.5, 4.1 ).Min(new Vec2(3  , 4  )), new Vec2(0.5, 4   ));
+    compare(new Vec2(4.2, 0.56).Min(new Vec2(3.5, 0.7)), new Vec2(3.5, 0.56));
+});
+
 test("Dist(u,v) returns the Euclidean distance between u and v", () => {
     const v1   = new Vec2(1,  0);
     const v2   = new Vec2(4, -4);

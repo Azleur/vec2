@@ -150,24 +150,54 @@ export class Vec2 {
         return new Vec2(-this.values[1], this.values[0]);
     }
 
-    /** Returns a copy of this vector, applying floor() to all coefficients. */
+    /** Returns a copy of this vector, applying floor() to all components. */
     Floor(): Vec2 {
         return new Vec2(Math.floor(this.values[0]), Math.floor(this.values[1]));
     }
 
-    /** Returns a copy of this vector, applying ceil() to all coefficients. */
+    /** Returns a copy of this vector, applying ceil() to all components. */
     Ceil(): Vec2 {
         return new Vec2(Math.ceil(this.values[0]), Math.ceil(this.values[1]));
     }
 
-    /** Returns a copy of this vector, applying abs() to all coefficients. */
+    /** Returns a copy of this vector, applying abs() to all components. */
     Abs(): Vec2 {
         return new Vec2(Math.abs(this.values[0]), Math.abs(this.values[1]));
     }
 
-    /** Returns a copy of this vector, applying f() to all coefficients. */
+    /** Returns a copy of this vector, applying f() to all components. */
     Map(f: (x: number) => number): Vec2 {
         return new Vec2(f(this.values[0]), f(this.values[1]));
+    }
+
+    /** Returns the maximum component in this vector. */
+    Max(): number;
+    /** Returns the component-wise maximum of this and that. */
+    Max(that: Vec2): Vec2;
+    Max(that?: Vec2): Vec2 | number {
+        if (that === undefined) {
+            return Math.max(this.values[0], this.values[1]);
+        } else {
+            return new Vec2(
+                Math.max(this.values[0], that.values[0]),
+                Math.max(this.values[1], that.values[1]),
+            );
+        }
+    }
+
+    /** Returns the minimum component in this vector. */
+    Min(): number;
+    /** Returns the component-wise minimum of this and that. */
+    Min(that: Vec2): Vec2;
+    Min(that?: Vec2): Vec2 | number {
+        if (that === undefined) {
+            return Math.min(this.values[0], this.values[1]);
+        } else {
+            return new Vec2(
+                Math.min(this.values[0], that.values[0]),
+                Math.min(this.values[1], that.values[1]),
+            );
+        }
     }
 }
 
